@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>20120328</title>
+<link type="text/css" rel="stylesheet" href="css/style.css">
+<style>
+.small { font-size: 30px; }
+.large { font-size: 120px; }
+.red { color: red; }
+.blue { color: blue; }
+.center { text-align: center; }
+.code { font-size: 12px; }
+</style>
+</head>
+<body>
+
+<h1>傑作Perlモジュール<br />Test::TCP</h1>
+<p>2012.03.28</p>
+
+<h1>About me</h1>
+
+<h2>About me</h2>
+
+<ul>
+<li>GitHub: <a href="http://github.com/okamuuu">http://github.com/okamuuu/</a></li>
+<li>Blog: <a href="http://okamuuu.hatenablog.com/">http://okamuuu.hatenablog.com/</a></li>
+<li>Node.js, Perl, JavaScript, HTML, CSS, Objective-C</li>
+</ul>
+
+<h1>自称生粋のPerl使い</h1>
+
+<h1>最近浮ついてNode.jsを使っていますが<span class="red">本妻</span>はPerlです。</h1>
+
+<h1>本日は<span class="red">本妻</span>の魅力を紹介したいと思います。</h1>
+
+<h1>CPAN</h1>
+
+<h2>CPAN</h2>
+
+<ul>
+    <li>CPANにアップされたモジュールは誰でも使えます。</li>
+    <li>CPANにアップするにはPAUSE IDが必要です。</li>
+    <li>承認制なのでPerlの約束事を守っていないモジュールをアップしようとすると無視されます。</li>
+    <li>PAUSE IDを持っている人はCPAN AUTHORと呼ばれます。</li>
+    <li>最低限のPerlの約束事を守れる人は誰でもCPAN AUTHORになれます。</li>
+    <li>私も一応CPAN AUTHORです。<a href="http://search.cpan.org/~okamuuu/">http://search.cpan.org/~okamuuu/</a></li>
+</ul>
+
+<h2>CPANモジュールの評価方法</h2>
+
+<ul>
+    <li>http://cpanratings.perl.org/上にレビュアーのコメントが書き込まれます。</a></li>
+    <li>傾向として<span class"red">車輪の再発明</span>を行った場合、とてつもなくディスられます</li>
+    <li>星が5個つくのは稀です。</li>
+</ul> 
+
+<h2>本日紹介するPerlモジュールのレビュー</h2>
+
+<p>
+3 out of 3 found this review helpful:<br />
+Test-TCP (0.11) <span class="red">☆☆☆☆☆ </span><br />
+This is an incredibly useful module to test TCP based server program. 
+</p>
+<p>
+All you have to do is to provide two callbacks: one is server to run the server side process, which could be perl code or a different program with exec(), and the other is the client code that tests the server process. Both would be called after the successful fork() and will automatically receive the empty port as a callback argument, which makes it so handy to use. 
+</p>
+<p>
+In Plack project we heavily use this module to run an HTTP server and then sends HTTP request to the forked server and back. Very handy.
+Tatsuhiko Miyagawa - 2009-09-28T14:16:29
+</p>
+
+<h2>国内で有名なCPAN AUTHOR</h1>
+
+<ul>
+    <li>Tatsuhiko Miyagawa(975)</li>
+    <li>Tokuhiro Matsuno(333)</li>
+    <li>Daisuke Murase(279)</li>
+    <li>Kazuhiro Osawa(267)</li>
+    <li>Daisuke Maki(178)</li>
+    <li>Kazuho Oku(175)</li>
+</ul>
+
+<h2>国内で有名なCPAN AUTHOR</h1>
+
+<ul>
+    <li>Tatsuhiko Miyagawa(975)</li>
+    <li><span class="red">Tokuhiro Matsuno(333)</a></li>
+    <li>Daisuke Murase(279)</li>
+    <li>Kazuhiro Osawa(267)</li>
+    <li>Daisuke Maki(178)</li>
+    <li>Kazuho Oku(175)</li>
+</ul>
+
+<p><span class="red">作者</span</p>
+
+<h2>国内で有名なCPAN AUTHOR</h1>
+
+<ul>
+    <li><span class="blue">Tatsuhiko Miyagawa(975)</span></li>
+    <li><span class="red">Tokuhiro Matsuno(333)</a></li>
+    <li>Daisuke Murase(279)</li>
+    <li>Kazuhiro Osawa(267)</li>
+    <li>Daisuke Maki(178)</li>
+    <li>Kazuho Oku(175)</li>
+</ul>
+
+<p><span class="red">作者</span</p>
+<p><span class="blue">レビュアー</span</p>
+
+<h1>Test::TCPがおすすめの理由</h1>
+
+<h2>Test::TCPがおすすめの理由</h2>
+
+<p>TCP ソケットをつかうサーバーのテストを書きやすくするためのモジュールです。結構似たようなことをやっているケースは多いとおもうので、簡単につかえるようにモジュールにしてみました。</p>
+
+<p>”&gt;&lt;xmp&gt;TokuLog 改メ tokuhirom’s blogより</p>
+
+<p>テストの仕組み作りが捗ります</p>
+
+<h2>Test::TCPの使い方</h2>
+
+<pre><code>
+my $server = Test::TCP->new(
+        code => sub {
+            my $port = shift;
+
+            ### プロセス終了時に削除される一時ディレクトリを作成
+            my $db = File::Spec->catfile( File::Temp::tempdir( CLEANUP => 1 ), 'test.db' );  
+
+            ### コマンド作成 
+            my $bin = scalar File::Which::which('groonga'); 
+            my @cmd = (
+                $bin,                        '-s',
+                '--port',                    $port,
+                '--protocol',                'http',
+                '-n', $db
+            );
+
+            exec @cmd;
+            die "cannot execute $bin: $!";
+        },  
+    ); 
+}
+</code></pre>
+
+<h1>とても便利です。</h1>
+
+<h1>ご清聴ありがとうございました</h1>
+
+<!-- Grab Google CDN's jQuery. fall back to local if necessary --> 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script> 
+<script>!window.jQuery && document.write('<script src="js/libs/jquery-1.6.1.min.js"><\/script>')</script> 
+<script type="text/javascript" src="js/libs/prettify.js"></script>
+<script type="text/javascript" src="js/mylibs/m9.js"></script>
+<script type="text/javascript">
+jQuery.event.add(window, "load", function(){
+    prettyPrint();
+
+    var elapsed = 0;
+    var timer = $('<div id="timer"><span class="min">00</span>:<span class="sec">00</span></div>');
+    var m = timer.find('.min');
+    var s = timer.find('.sec');
+
+    elapsed = setInterval(do_time, 1000);
+
+    $('body').append( timer );
+
+    function do_time() {
+        minute = parseFloat(m.text());
+        second = parseFloat(s.text());
+        
+        second++;
+        
+        if(second > 59) {
+            second = 0;
+            minute = minute + 1;
+        }
+        if(minute > 59) {
+            minute = 0;
+        }
+        
+        m.html("0".substring(minute >= 10) + minute);
+        s.html("0".substring(second >= 10) + second);
+    }
+    
+});
+</script>
+</body>
+</html>
+
+
